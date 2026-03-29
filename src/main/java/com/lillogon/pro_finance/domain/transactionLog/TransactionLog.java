@@ -19,12 +19,15 @@ import java.util.UUID;
 @AllArgsConstructor
 public class TransactionLog {
     @Id
-    @GeneratedValue
     private UUID id;
 
-    private String installments;
+    @Column(nullable = false)
+    private Integer installments;
+    @Column(name = "event_type", length = 2)
     private String eventType;
+    @Column(nullable = false)
     private BigDecimal amount;
+    @Column(name = "event_date", nullable = false)
     private LocalDateTime eventDate;
 
     @ManyToOne

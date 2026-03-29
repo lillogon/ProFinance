@@ -1,9 +1,6 @@
 package com.lillogon.pro_finance.domain.institution;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,14 +17,19 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Institution {
     @Id
-    @GeneratedValue
     private UUID id;
 
+    @Column(nullable = false, length = 200)
     private String description;
+    @Column(name = "is_default", nullable = false)
     private Boolean isDefault;
+    @Column(nullable = false)
     private Boolean active;
 
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
+    @Column(name = "blocked_at")
     private LocalDateTime blockedAt;
+    @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 }

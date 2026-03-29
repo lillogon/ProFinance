@@ -18,16 +18,22 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Party {
     @Id
-    @GeneratedValue
     private UUID id;
 
+    @Column(nullable = false, length = 200)
     private String description;
+    @Column(name = "document_number", length = 14)
     private String documentNumber;
+    @Column(name = "person_type", length = 1)
     private String personType;
+    @Column(nullable = false)
     private Boolean active;
 
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
+    @Column(name = "blocked_at")
     private LocalDateTime blockedAt;
+    @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
     @ManyToOne

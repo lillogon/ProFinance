@@ -1,9 +1,6 @@
 package com.lillogon.pro_finance.domain.category;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,13 +17,17 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Category {
     @Id
-    @GeneratedValue
     private UUID id;
 
+    @Column(nullable = false, length = 30)
     private String description;
+    @Column(nullable = false)
     private Boolean active;
 
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
+    @Column(name = "blocked_at")
     private LocalDateTime blockedAt;
+    @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 }
