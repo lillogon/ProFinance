@@ -17,6 +17,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Category {
     @Id
+    @GeneratedValue
     private UUID id;
 
     @Column(nullable = false, length = 30)
