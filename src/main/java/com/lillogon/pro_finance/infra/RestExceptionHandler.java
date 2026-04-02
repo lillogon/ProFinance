@@ -13,7 +13,7 @@ public class RestExceptionHandler {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<RestErrorMessage> handleJsonError(HttpMessageNotReadableException exception){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(new RestErrorMessage(HttpStatus.BAD_REQUEST, "Invalid JSON format."));
+                .body(new RestErrorMessage(HttpStatus.BAD_REQUEST, "Invalid request."));
     }
 
     @ExceptionHandler(Exception.class)

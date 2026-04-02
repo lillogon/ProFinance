@@ -2,18 +2,22 @@ package com.lillogon.pro_finance.service;
 
 import com.lillogon.pro_finance.domain.category.Category;
 import com.lillogon.pro_finance.domain.category.CategoryRequestDTO;
+import com.lillogon.pro_finance.domain.category.CategoryResponseDTO;
 import com.lillogon.pro_finance.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.format.DecimalStyle;
+import java.util.List;
 
 @Service
 public class CategoryService {
 
     @Autowired
-    private CategoryRepository repository;
+    private CategoryRepository categoryRepository;
 
     public Category createCategory(CategoryRequestDTO data){
         Category newCategory = new Category();
@@ -33,8 +37,15 @@ public class CategoryService {
             newCategory.setBlockedAt(now);
         }
 
-        repository.save(newCategory);
+        categoryRepository.save(newCategory);
 
         return newCategory;
+    }
+
+    public List<CategoryResponseDTO> getCategories(int page, int size){
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Category> categoriesPage = this.categoryRepository.findAll(pageable);
+        return categoriesPage.map(category -> new CategoryResponseDTO(category.getId(), category.getDescription(), category.getActive(), category.getCreatedAt(), category.getBlockedAt(), category.getUpdatedAt()))
+                .stream().toList();
     }
 }
