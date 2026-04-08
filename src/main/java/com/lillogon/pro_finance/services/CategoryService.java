@@ -63,4 +63,39 @@ public class CategoryService {
 
         categoryRepository.delete(category);
     }
+
+    public CategoryResponseDTO updateCategory(UUID id, CategoryRequestDTO data){
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found."));
+
+        if (data.description() != null){
+            if (data.description().isBlank()){
+                throw new IllegalArgumentException("Description cannot be empty.");
+            }
+            category.setDescription(data.description().toLowerCase().trim());
+        }
+
+        LocalDateTime now = LocalDateTime.now();
+
+        if (data.active() != null){
+            category.setActive(data.active());
+            if (data.active()){
+                category.setBlockedAt(null);
+            } else {
+                category.setBlockedAt(now);
+            }
+        }
+
+        category.setUpdatedAt(now);
+
+        Category saved = categoryRepository.save(category);
+        return new CategoryResponseDTO(
+                saved.getId(),
+                saved.getDescription(),
+                saved.getActive(),
+                saved.getCreatedAt(),
+                saved.getBlockedAt(),
+                saved.getUpdatedAt()
+        );
+    }
 }
