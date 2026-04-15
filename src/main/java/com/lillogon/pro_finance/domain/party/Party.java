@@ -18,6 +18,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Party {
     @Id
+    @GeneratedValue
     private UUID id;
 
     @Column(nullable = false, length = 200)
