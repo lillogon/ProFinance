@@ -5,8 +5,7 @@ import com.lillogon.pro_finance.domain.category.CategoryRequestDTO;
 import com.lillogon.pro_finance.domain.category.CategoryResponseDTO;
 import com.lillogon.pro_finance.exceptions.ResourceNotFoundException;
 import com.lillogon.pro_finance.repositories.CategoryRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -16,12 +15,12 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class CategoryService {
 
-    @Autowired
-    private CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
 
-    public Category createCategory(CategoryRequestDTO data){
+    public CategoryResponseDTO createCategory(CategoryRequestDTO data){
         Category newCategory = new Category();
         LocalDateTime now = LocalDateTime.now();
 
@@ -41,19 +40,20 @@ public class CategoryService {
 
         categoryRepository.save(newCategory);
 
-        return newCategory;
+        return CategoryResponseDTO.from(newCategory);
     }
 
     public List<CategoryResponseDTO> getCategories(int page, int size){
         Pageable pageable = PageRequest.of(page, size);
-        Page<Category> categoriesPage = this.categoryRepository.findAll(pageable);
-        return categoriesPage.map(category -> new CategoryResponseDTO(category.getId(), category.getDescription(), category.getActive(), category.getCreatedAt(), category.getBlockedAt(), category.getUpdatedAt()))
-                .stream().toList();
+        return categoryRepository.findAll(pageable)
+                .getContent().stream()
+                .map(CategoryResponseDTO::from)
+                .toList();
     }
 
     public CategoryResponseDTO getCategoryById(UUID id){
         return categoryRepository.findById(id)
-                .map(category -> new CategoryResponseDTO(category.getId(), category.getDescription(), category.getActive(), category.getCreatedAt(), category.getBlockedAt(), category.getUpdatedAt()))
+                .map(CategoryResponseDTO::from)
                 .orElseThrow(() -> new ResourceNotFoundException("Category not found."));
     }
 
@@ -88,14 +88,6 @@ public class CategoryService {
 
         category.setUpdatedAt(now);
 
-        Category saved = categoryRepository.save(category);
-        return new CategoryResponseDTO(
-                saved.getId(),
-                saved.getDescription(),
-                saved.getActive(),
-                saved.getCreatedAt(),
-                saved.getBlockedAt(),
-                saved.getUpdatedAt()
-        );
+        return CategoryResponseDTO.from(categoryRepository.save(category));
     }
 }

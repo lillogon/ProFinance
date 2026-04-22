@@ -8,7 +8,6 @@ import com.lillogon.pro_finance.domain.party.PartyResponseDTO;
 import com.lillogon.pro_finance.exceptions.ResourceNotFoundException;
 import com.lillogon.pro_finance.repositories.CategoryRepository;
 import com.lillogon.pro_finance.repositories.PartyRepository;
-import jakarta.servlet.http.Part;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

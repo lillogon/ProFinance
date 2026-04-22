@@ -1,10 +1,9 @@
 package com.lillogon.pro_finance.controllers;
 
-import com.lillogon.pro_finance.domain.category.Category;
 import com.lillogon.pro_finance.domain.category.CategoryRequestDTO;
 import com.lillogon.pro_finance.domain.category.CategoryResponseDTO;
 import com.lillogon.pro_finance.services.CategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,21 +12,19 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/category")
+@RequiredArgsConstructor
 public class CategoryController {
 
-    @Autowired
-    private CategoryService categoryService;
+    private final CategoryService categoryService;
 
     @PostMapping
-    public ResponseEntity<Category> create(@RequestBody CategoryRequestDTO body){
-        Category newCategory = this.categoryService.createCategory(body);
-        return ResponseEntity.ok(newCategory);
+    public ResponseEntity<CategoryResponseDTO> create(@RequestBody CategoryRequestDTO body){
+        return ResponseEntity.ok(categoryService.createCategory(body));
     }
 
     @GetMapping
     public ResponseEntity<List<CategoryResponseDTO>> getCategories(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
-        List<CategoryResponseDTO> allCategories = this.categoryService.getCategories(page, size);
-        return ResponseEntity.ok(allCategories);
+        return ResponseEntity.ok(categoryService.getCategories(page, size));
     }
 
     @GetMapping("/{id}")
