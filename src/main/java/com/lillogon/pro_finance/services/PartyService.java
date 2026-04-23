@@ -8,13 +8,13 @@ import com.lillogon.pro_finance.exceptions.ResourceNotFoundException;
 import com.lillogon.pro_finance.repositories.CategoryRepository;
 import com.lillogon.pro_finance.repositories.PartyRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -79,5 +79,18 @@ public class PartyService {
                 .getContent().stream()
                 .map(PartyResponseDTO::from)
                 .toList();
+    }
+
+    public PartyResponseDTO getPartyById(UUID id){
+        return partyRepository.findById(id)
+                .map(PartyResponseDTO::from)
+                .orElseThrow(() -> new ResourceNotFoundException("Party not found."));
+    }
+
+    public void deleteParty(UUID id) {
+        Party party = partyRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Party not found."));
+
+        partyRepository.delete(party);
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/party")
@@ -24,5 +25,16 @@ public class PartyController {
     @GetMapping
     public ResponseEntity<List<PartyResponseDTO>> getParties(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
         return ResponseEntity.ok(partyService.getParties(page, size));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PartyResponseDTO> getPartyById(@PathVariable UUID id){
+        return ResponseEntity.ok(partyService.getPartyById(id));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteParty(@PathVariable UUID id){
+        partyService.deleteParty(id);
+        return ResponseEntity.ok("Party deleted successfully.");
     }
 }
