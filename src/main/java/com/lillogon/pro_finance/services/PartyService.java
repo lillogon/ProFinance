@@ -1,14 +1,13 @@
 package com.lillogon.pro_finance.services;
 
 import com.lillogon.pro_finance.domain.category.Category;
-import com.lillogon.pro_finance.domain.category.CategorySimpleDTO;
 import com.lillogon.pro_finance.domain.party.Party;
 import com.lillogon.pro_finance.domain.party.PartyRequestDTO;
 import com.lillogon.pro_finance.domain.party.PartyResponseDTO;
 import com.lillogon.pro_finance.exceptions.ResourceNotFoundException;
 import com.lillogon.pro_finance.repositories.CategoryRepository;
 import com.lillogon.pro_finance.repositories.PartyRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,15 +17,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class PartyService {
 
-    @Autowired
-    private PartyRepository partyRepository;
+    private final PartyRepository partyRepository;
+    private final CategoryRepository categoryRepository;
 
-    @Autowired
-    private CategoryRepository categoryRepository;
-
-    public Party createParty(PartyRequestDTO data){
+    public PartyResponseDTO createParty(PartyRequestDTO data){
         Party newParty = new Party();
 
         if (data.description() == null || data.description().isBlank()){
@@ -73,14 +70,14 @@ public class PartyService {
         }
 
         partyRepository.save(newParty);
-        return (newParty);
+        return PartyResponseDTO.from(newParty);
     }
 
     public List<PartyResponseDTO> getParties(int page, int size){
         Pageable pageable = PageRequest.of(page, size);
-        Page<Party> partiesPage = this.partyRepository.findAll(pageable);
-        return partiesPage.getContent().stream()
-                .map(party -> new PartyResponseDTO(party.getId(), party.getDescription(), party.getDocumentNumber(), party.getPersonType(), party.getActive(), party.getCreatedAt(), party.getBlockedAt(), party.getUpdatedAt(), party.getCategory() != null ? new CategorySimpleDTO(party.getCategory().getId(), party.getCategory().getDescription()) : null))
+        return partyRepository.findAll(pageable)
+                .getContent().stream()
+                .map(PartyResponseDTO::from)
                 .toList();
     }
 }

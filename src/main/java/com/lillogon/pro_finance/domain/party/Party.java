@@ -19,6 +19,7 @@ import java.util.UUID;
 public class Party {
     @Id
     @GeneratedValue
+    @Column(updatable = false)
     private UUID id;
 
     @Column(nullable = false, length = 200)

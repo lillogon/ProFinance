@@ -1,10 +1,9 @@
 package com.lillogon.pro_finance.controllers;
 
-import com.lillogon.pro_finance.domain.party.Party;
 import com.lillogon.pro_finance.domain.party.PartyRequestDTO;
 import com.lillogon.pro_finance.domain.party.PartyResponseDTO;
 import com.lillogon.pro_finance.services.PartyService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,20 +11,18 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/party")
+@RequiredArgsConstructor
 public class PartyController {
 
-    @Autowired
-    private PartyService partyService;
+    private final PartyService partyService;
 
     @PostMapping
-    public ResponseEntity<Party> create(@RequestBody PartyRequestDTO body){
-        Party newParty = this.partyService.createParty(body);
-        return ResponseEntity.ok(newParty);
+    public ResponseEntity<PartyResponseDTO> create(@RequestBody PartyRequestDTO body){
+        return ResponseEntity.ok(partyService.createParty(body));
     }
 
     @GetMapping
     public ResponseEntity<List<PartyResponseDTO>> getParties(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
-        List<PartyResponseDTO> allParties = this.partyService.getParties(page, size);
-        return ResponseEntity.ok(allParties);
+        return ResponseEntity.ok(partyService.getParties(page, size));
     }
 }
