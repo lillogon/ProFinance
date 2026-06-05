@@ -3,7 +3,7 @@ CREATE TABLE institution (
     description VARCHAR(200) NOT NULL,
     is_default BOOLEAN NOT NULL DEFAULT FALSE,
     active BOOLEAN NOT NULL,
-    created_at TIMESTAMP NOT NULL,
-    blocked_at TIMESTAMP,
-    updated_at TIMESTAMP NOT NULL
+    created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
+    blocked_at TIMESTAMP WITH TIME ZONE,
+    updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
 );

@@ -7,7 +7,8 @@ public enum AccountStatus {
 
     OPEN("OP", "Open"),
     PAID("PD", "Paid"),
-    OVERDUE("OD", "Overdue");
+    OVERDUE("OD", "Overdue"),
+    CANCELED("CA", "Canceled");
 
     private final String code;
     private final String description;
