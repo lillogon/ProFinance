@@ -3,7 +3,7 @@ CREATE TABLE party (
     description VARCHAR(200) NOT NULL,
     document_number VARCHAR(14),
     person_type CHAR(2),
-    active BOOLEAN NOT NULL,
+    active BOOLEAN NOT NULL DEFAULT TRUE,
     created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
     blocked_at TIMESTAMP WITH TIME ZONE,
     updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
