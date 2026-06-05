@@ -1,4 +1,4 @@
-package com.lillogon.pro_finance;
+package com.lillogon.profinance;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

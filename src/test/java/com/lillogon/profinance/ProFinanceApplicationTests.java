@@ -1,4 +1,4 @@
-package com.lillogon.pro_finance;
+package com.lillogon.profinance;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
