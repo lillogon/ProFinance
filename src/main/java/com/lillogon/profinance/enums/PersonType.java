@@ -3,7 +3,7 @@ package com.lillogon.profinance.enums;
 import lombok.Getter;
 
 @Getter
-public enum PersonType {
+public enum PersonType implements CodeEnum {
 
     INDIVIDUAL("ID", "Individual"),
     COMPANY("CO", "Company");

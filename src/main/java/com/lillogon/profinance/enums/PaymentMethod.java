@@ -3,7 +3,7 @@ package com.lillogon.profinance.enums;
 import lombok.Getter;
 
 @Getter
-public enum PaymentMethod {
+public enum PaymentMethod implements CodeEnum {
 
     CREDIT_CARD("CC", "Credit Card"),
     DEBIT_CARD("DC", "Debit Card"),
