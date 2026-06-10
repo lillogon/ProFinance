@@ -30,7 +30,7 @@ public class TransactionLog {
     private Integer installmentNumber;
 
     @Convert(converter = EventTypeConverter.class)
-    @Column(name = "event_type", length = 2)
+    @Column(name = "event_type", length = 2, nullable = false)
     private EventType eventType;
 
     @Column(name = "amount", precision = 15, scale = 2, nullable = false)
@@ -41,6 +41,6 @@ public class TransactionLog {
     private OffsetDateTime eventDate;
 
     @ManyToOne
-    @JoinColumn(name = "account_id")
+    @JoinColumn(name = "account_id", nullable = false)
     private Account account;
 }
