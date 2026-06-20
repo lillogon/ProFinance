@@ -1,11 +1,9 @@
 package com.lillogon.profinance.dto.category;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-public record CategoryRequestDTO(
-        @NotBlank(message = "Description is required.")
+public record CategoryUpdateDTO(
         @Size(max = 30, message = "Description must have at most 30 characters.")
         @Pattern(regexp = "^[a-zA-Z0-9 ]*$", message = "Description must contain only letters and numbers.")
         String description,
