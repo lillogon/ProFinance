@@ -10,6 +10,7 @@ public record InstitutionResponseDTO(
         Boolean active,
         OffsetDateTime createdAt,
         OffsetDateTime updatedAt,
-        OffsetDateTime blockedAt
+        OffsetDateTime blockedAt,
+        UUID previousDefaultInstitutionId
 ) {
 }

@@ -6,11 +6,16 @@ import com.lillogon.profinance.entity.Institution;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.UUID;
 
 @Component
 public class InstitutionMapper {
 
     public InstitutionResponseDTO toResponse(Institution institution) {
+        return toResponse(institution, null);
+    }
+
+    public InstitutionResponseDTO toResponse(Institution institution, UUID previousDefaultInstitutionId) {
         return new InstitutionResponseDTO(
                 institution.getId(),
                 institution.getDescription(),
@@ -18,7 +23,8 @@ public class InstitutionMapper {
                 institution.getActive(),
                 institution.getCreatedAt(),
                 institution.getUpdatedAt(),
-                institution.getBlockedAt()
+                institution.getBlockedAt(),
+                previousDefaultInstitutionId
         );
     }
 
