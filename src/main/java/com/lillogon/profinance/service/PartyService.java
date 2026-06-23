@@ -127,7 +127,7 @@ public class PartyService {
 
     //Get Category by ID
     private Category getCategory(UUID categoryId) {
-        return categoryRepository.findById(categoryId)
+        return categoryRepository.findByIdAndActiveTrue(categoryId)
                 .orElseThrow(() -> new BusinessException(HttpStatus.NOT_FOUND, "Category not found."));
     }
 }
